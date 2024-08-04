@@ -115,7 +115,7 @@ def main():
     
     lr_values = [0.001, 0.005, 0.01]  # Learning rates to try
     batch_size_values = [32, 64]  # Batch sizes to try
-    embedding_dim_values = [64, 128]  # Embedding dimensions to try
+    embedding_dim_values = [100]#[64, 128]  # Embedding dimensions to try
 
     # # Toys_and_Games
     # lr: 0.001, batch_size: 16, embedding_dim: 64
@@ -195,7 +195,7 @@ def main():
     results_df['quality'] = results_df['weighted_sideinfo_output'].apply(lambda x: x[0])
     results_df = results_df[['item_encoded', 'unit_time', 'time_output', 'conformity', 'quality']]
 
-    result_path = f'{config.dataset_path}/pop_{config.dataset}.pkl'
+    result_path = f'{config.dataset_path}pop_{config.dataset}.pkl' # //pop_{}되는 거 같아요
     results_df.to_pickle(result_path)
     print(f"Results saved to {result_path}")
 

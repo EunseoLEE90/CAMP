@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="5603aab4-f29b-4330-a9da-de7fd2ad1c7a" name="colossal">
+        <fileTransfer accessType="SFTP" host="147.47.236.25" port="22" sshConfigId="3f9720d9-a8d9-409d-b265-0233a1572be6" sshConfig="eunseo@147.47.236.25:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" isUseRsync="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="9f6e7ee4-baf9-496b-bab0-a3ce0313508a" name="eunseo@147.47.236.25:22555 password">
+        <fileTransfer accessType="SFTP" host="147.47.236.25" port="22555" sshConfigId="ab8282fd-8a2b-47a4-bc93-28229a4e862e" sshConfig="eunseo@147.47.236.25:22555 password">
+          <advancedOptions>
+            <advancedOptions isUseRsync="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

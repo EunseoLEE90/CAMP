@@ -148,9 +148,9 @@ def main():
             batch_sizes = [64, 128]
             embedding_dims = [64, 128]
     else:
-        learning_rates = [0.001, 0.0005, 0.0001]
-        batch_sizes = [64, 128]
-        embedding_dims = [64, 128]
+        learning_rates = [0.0005]#0.001, 0.0005, 0.0001
+        batch_sizes = [64]
+        embedding_dims = [100] #64, 128,
 
     best_loss = float('inf')
     best_model_params = {}

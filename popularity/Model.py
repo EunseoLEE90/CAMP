@@ -66,18 +66,18 @@ class ModuleSideInfo(nn.Module):
     def __init__(self, config: Config):
         super(ModuleSideInfo, self).__init__()
         self.config = config
-        self.fc_output = nn.Linear(2 * config.embedding_dim, 1)
+        self.fc_output = nn.Linear(config.embedding_dim, 1)
         nn.init.xavier_uniform_(self.fc_output.weight) 
         nn.init.constant_(self.fc_output.bias, 0.1)
         # self.batch_norm = nn.BatchNorm1d(2 * config.embedding_dim)
         # self.dropout = nn.Dropout(p=0.3)
         self.relu = nn.ReLU() 
 
-    def forward(self, cat_embeds, store_embeds):
-        embed_sideinfo = torch.cat((cat_embeds, store_embeds), 1)
+    def forward(self, product_embeds):
+        #embed_sideinfo = torch.cat((cat_embeds, store_embeds, title_embeds, description_embeds), 1)
         # embed_sideinfo = self.batch_norm(embed_sideinfo)  
         # embed_sideinfo = self.dropout(embed_sideinfo)
-        embed_sideinfo = self.fc_output(embed_sideinfo)
+        embed_sideinfo = self.fc_output(product_embeds)
         embed_sideinfo = self.relu(embed_sideinfo)
         return embed_sideinfo
 
@@ -90,9 +90,9 @@ class PopPredict(nn.Module):
 
         # Embedding layers
         self.item_embedding = nn.Embedding(num_items + 1, self.embedding_dim, padding_idx=0)
-        self.cat_embedding = nn.Embedding(num_cats + 1, self.embedding_dim, padding_idx=0)
-        self.store_embedding = nn.Embedding(num_stores + 1, self.embedding_dim)
         self.time_embedding = nn.Embedding(max_time + 1, self.embedding_dim)
+        self.cat_embedding = nn.Embedding(num_cats + 1, self.embedding_dim, padding_idx=0)
+        self.product_embedding = nn.Linear(self.embedding_dim, self.embedding_dim)
 
         # Modules
         self.module_pop_history = ModulePopHistory(config=config)
@@ -116,18 +116,18 @@ class PopPredict(nn.Module):
         release_times = batch['release_time']
         pop_histories = batch['pop_history']
         categories = batch['category']
-        stores = batch['store']
+        product_embeds = batch['product_embedding']
 
         item_embeds = self.item_embedding(item_ids)
         time_embeds = self.time_embedding(times)
         release_time_embeds = self.time_embedding(release_times)
         cat_embeds = self.cat_embedding(categories)
-        store_embeds = self.store_embedding(stores)
+        product_embeds = self.product_embedding(product_embeds)
 
         # Module outputs
         pop_history_output = self.module_pop_history(pop_histories, item_ids, times)
         time_output = self.module_time(item_embeds, release_time_embeds, time_embeds)
-        sideinfo_output = self.module_sideinfo(cat_embeds, store_embeds)
+        sideinfo_output = self.module_sideinfo(product_embeds)
 
         # print("weighted_sideinfo_output:", sideinfo_output)
 
