@@ -1,5 +1,5 @@
 # CAMP
-<<<<<<< HEAD
+ An extended version of CAMP incorporating additional side information such as item description.
 
 ## 0. Dataset Download
 
@@ -64,6 +64,3 @@ python main.py --dataset Toys_and_Games --data_type unif
 ### Important Note
 - The `interest` module should be executed after the `popularity` module to ensure proper training.
 
-=======
-An extended version of CAMP incorporating additional side information such as item description.
->>>>>>> 7f478c22b2e3fee2adb63a5979d11854d7bf9566
